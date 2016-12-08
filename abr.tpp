@@ -33,13 +33,27 @@ void Abr::ajouter(Noeud* &node, int val){
 	}
 	else{
 		//si la valeur à inserer est inférieur à celle du noeud acutel
-		if(val <= node->val){
+		if(val >= node->val){
 			ajouter(node->sad, val);
 		}
 		else {
 			ajouter(node->sag, val);
 		}
 	}
+}
+
+int Abr::maxHeight(Noeud *p) {
+  if (!p) return 0;
+  int leftHeight = maxHeight(p->sag);
+  int rightHeight = maxHeight(p->sad);
+  return (leftHeight > rightHeight) ? leftHeight + 1: rightHeight + 1;
+}
+
+// Convert an integer value to string
+string Abr::intToString(int val) {
+  ostringstream ss;
+  ss << val;
+  return ss.str();
 }
 
 void Abr::afficher(Noeud* c, int indent)
@@ -117,7 +131,5 @@ void Abr::printPretty(Noeud *root, int level, int indentSpace, ostream& out) {
     }
     nodesInThisLevel *= 2;
   }
-  printBranches(branchLen, nodeSpaceLen, startLen, nodesInThisLevel, nodesQueue, out);
-  printLeaves(indentSpace, level, nodesInThisLevel, nodesQueue, out);
 }
 
