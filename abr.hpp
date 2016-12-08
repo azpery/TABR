@@ -26,13 +26,8 @@ class Abr{
 		Noeud* racine; //noeud_arbre vide
 		int nb_noeuds; //nb de noeud dans l'arbre
 		void ajouter(Noeud*& node, int val);
-		void afficher(Noeud* p, int indent);
-		void printPretty(Noeud *root, int level, int indentSpace, ostream& out);
-		void printBranches(int branchLen, int nodeSpaceLen, int startLen, int nodesInThisLevel, const deque<Noeud*>& nodesQueue, ostream& out);
-		void printNodes(int branchLen, int nodeSpaceLen, int startLen, int nodesInThisLevel, const deque<Noeud*>& nodesQueue, ostream& out);
-		void printLeaves(int indentSpace, int level, int nodesInThisLevel, const deque<Noeud*>& nodesQueue, ostream& out);
-		int maxHeight(Noeud *p);
-		string intToString(int val);
+		void afficher(Noeud* p);
+		string to_String(Noeud* c);
 };
 
 #include "abr.tpp"

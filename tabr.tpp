@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-
+#include "abrprinter.hpp"
 using namespace std;
 //créer un abr vide
 
@@ -50,11 +50,35 @@ void Tabr::remplirCase(vector<string> intervals,vector<string> values){
 
 void Tabr::afficher_tabr(){
 	for (int i=0; i<tabr.size();i++){
-		cout << "Interval : " << tabr[i].interval.valmin << ";" << tabr[i].interval.valmax << endl;
-		tabr[i].abr.printPretty(tabr[i].abr.racine, 1, 0, cout);
+		cout << "Interval : " << tabr[i].interval.valmin << ";" << tabr[i].interval.valmax << ":";
+		tabr[i].abr.afficher(tabr[i].abr.racine);
+		cout << endl;
 	}
 }
 
+string Tabr::to_String(){
+	string res = "";
+	for (int i=0; i<tabr.size();i++){
+		res += to_string(tabr[i].interval.valmin) + ";" + to_string(tabr[i].interval.valmax) + ":" + tabr[i].abr.to_String(tabr[i].abr.racine) + "\n";
+	}
+	return res;
+}
+
+void Tabr::afficher_tabr_graphique(){
+	AbrPrinter ap;
+	for (int i=0; i<tabr.size();i++){
+		cout << "Interval : " << to_string(tabr[i].interval.valmin) << ";" << to_string(tabr[i].interval.valmax) << endl;
+		ap.printPretty(tabr[i].abr.racine, 1, 0, cout);
+	}
+}
+
+//Exporte un Tabr dans un fichier texte dont le chemin est passé en paramètre
+void Tabr::export_tabr(string path){
+  	ofstream myfile;
+  	myfile.open (path.c_str());
+  	myfile << to_String();
+  	myfile.close();	
+}
 
 void Tabr::split(const string &s, char delim, vector<string> &elems) {
     stringstream ss;

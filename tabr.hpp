@@ -31,6 +31,9 @@ class Tabr{
 		void afficher_vector (const vector<string>& v);
 		void remplirCase(vector<string> intervals,vector<string> values);
 		void afficher_tabr();
+		void afficher_tabr_graphique();
+		void export_tabr(string path);
+		string to_String();
 };
 
 #include "tabr.tpp"
