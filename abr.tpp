@@ -56,13 +56,22 @@ void Abr::afficher(Noeud* c)
     }
 }
 
+bool Abr::isRoot(Noeud* c){
+	bool res = false;
+	if(c->val == racine->val){
+		res = true;
+	}
+	return res;
+}
+
 string Abr::to_String(Noeud* c){
 	string res = "";
     if (c != NULL)
-    {
-        res += to_String(c->sag);
-        res += to_String(c->sag);
-        return res + to_string(c->val) + ";";
+    { 
+        res = to_String(c->sag);
+        res += to_String(c->sad);
+        res += to_string(c->val) +( isRoot(c) == false ? ":" : "" );
     }
+    return res;
 }
 

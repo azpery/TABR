@@ -28,6 +28,7 @@ Tabr::Tabr(string file){
 		    vvalues.clear();
 		}
 		fichier.close();
+		cout << "Tabr généré avec succés, félicitation." << endl;
 	}
 	else{
 		cerr << "Impossible d'ouvrir le fichier !" << endl;
@@ -36,27 +37,17 @@ Tabr::Tabr(string file){
 
 
 Tabr::Tabr(int m,int n,int nbNoeud){
-
 	vector<Interval> intervalles = generateInter(m,n);
-
 	afficher_vector_intervalles(intervalles);
-
 	for(int i=0;i<intervalles.size();i++)
 	{
 		vector<int> values;
-
 		Case c;
-
 		c.interval = intervalles.at(i);
-
 		values = multiple_random(c.interval.valmin,c.interval.valmax,nbNoeud);
-
 		afficher_vector_int(values);
-
 		Abr abr(values);
-
 		c.abr = abr;
-
 		tabr.push_back(c);
 	}
 }
@@ -95,7 +86,7 @@ void Tabr::afficher_tabr(){
 string Tabr::to_String(){
 	string res = "";
 	for (int i=0; i<tabr.size();i++){
-		res += to_string(tabr[i].interval.valmin) + ";" + to_string(tabr[i].interval.valmax) + ":" + tabr[i].abr.to_String(tabr[i].abr.racine) + "\n";
+		res += to_string(tabr[i].interval.valmin) + ":" + to_string(tabr[i].interval.valmax) + ";" + tabr[i].abr.to_String(tabr[i].abr.racine) + "\n";
 	}
 	return res;
 }
