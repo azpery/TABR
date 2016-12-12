@@ -23,6 +23,7 @@ class Abr{
 	public:
 		Abr();
 		Abr(vector<string> values);
+		Abr(vector<int> values);
 		Noeud* racine; //noeud_arbre vide
 		int nb_noeuds; //nb de noeud dans l'arbre
 		void ajouter(Noeud*& node, int val);

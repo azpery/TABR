@@ -21,6 +21,14 @@ Abr::Abr(vector<string> v){
   	}
 }
 
+Abr::Abr(vector<int> v){
+	racine = NULL;
+
+  	for (int i = v.size() - 1; i >= 0 ;i--){
+    	ajouter(racine, v[i]);
+  	}
+}
+
 //Permet d'ajouter x dans l'arbre
 void Abr::ajouter(Noeud* &node, int val){
 	if(node == NULL){

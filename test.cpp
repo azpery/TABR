@@ -22,7 +22,7 @@ int rando(int min,int max);
 int main ()
 {
   
-	afficher_vecteur(generateInter(20,10));
+	afficher_vecteur(generateInter(30,10));
 
 
 return 0;
@@ -47,7 +47,7 @@ vector<Interval> generateInter(int m,int n){
 	inter.valmax = borne_max;
 
 	if(borne_max < m-5){
-		int a = borne_max + rando(1,5);
+		int a = borne_max + rando(0,5);
 		borne_max = a;
 	}
 
