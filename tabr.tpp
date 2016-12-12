@@ -83,6 +83,21 @@ void Tabr::afficher_tabr(){
 	}
 }
 
+bool Tabr::addToTabr(int my_val){
+	bool res = false;
+	bool foundInter = false;
+	for (int i=0; i<tabr.size();i++){
+		if(tabr[i].interval.valmin <= my_val &&  my_val <= tabr[i].interval.valmax){
+			foundInter = true;
+			res = tabr[i].abr.ajouter(tabr[i].abr.racine, my_val);
+		}
+	}
+	if(!foundInter){
+		cout << "La valeur" << my_val << " ne correspond à aucun interval" << endl;
+	}
+	return res;
+}
+
 string Tabr::to_String(){
 	string res = "";
 	for (int i=0; i<tabr.size();i++){

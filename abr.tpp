@@ -30,7 +30,8 @@ Abr::Abr(vector<int> v){
 }
 
 //Permet d'ajouter x dans l'arbre
-void Abr::ajouter(Noeud* &node, int val){
+bool Abr::ajouter(Noeud* &node, int val){
+	bool res = true;
 	if(node == NULL){
 		node = new Noeud;
 		node->val = val;
@@ -39,13 +40,17 @@ void Abr::ajouter(Noeud* &node, int val){
 	}
 	else{
 		//si la valeur à inserer est inférieur à celle du noeud acutel
-		if(val <= node->val){
-			ajouter(node->sag, val);
+		if(val < node->val){
+			res = ajouter(node->sag, val);
 		}
-		else {
-			ajouter(node->sad, val);
+		else if(val > node->val){
+			res = ajouter(node->sad, val);
+		}else{
+			res = false;
+			cout << "La valeur : " << val << " existe déjà, skipping.." << endl;
 		}
 	}
+	return res;
 }
 
 void Abr::afficher(Noeud* c)

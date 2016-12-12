@@ -51,6 +51,7 @@ class Tabr{
 		void afficher_vector_int(const vector<int>& v);
 		void afficher_vector_intervalles(vector<Interval> inter);
 		void afficher_tabr();
+		bool addToTabr(int my_val);
 		void afficher_tabr_graphique();
 		void afficher_inter(Interval inter);
 		string to_String();

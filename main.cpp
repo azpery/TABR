@@ -13,7 +13,7 @@ bool is_file_exist(string file){
 
 int main(){
 	Tabr tabr("anticonstitutionnellement_pas.txt");
-	string nom, c;
+	string nom, c, v;
 	int val,p,q;
 	int choix=1;
 	// Pour générer un arbre // 
@@ -26,6 +26,7 @@ int main(){
 		cout << "3 - Afficher TABR en mode graphique (parcours suffixe)" << endl;
 		cout << "4 - Exporter TABR dans un fichier" << endl;
 		cout << "5 - Générer TABR" << endl;
+		cout << "6 - Ajouter une valeur à notre TABR" << endl;
 		cout << "0 - Quitter" << endl;
 		cin >> choix;
 		switch (choix) {
@@ -80,6 +81,19 @@ int main(){
 
 				cout << "Tabr généré avec succés, félicitation"<< endl;
 			}	
+			break;
+		case 6:
+			
+			cout << "Saisir la valeur à ajouter"<< endl;	 
+			cin >> val; 
+			if (cin.fail()) {
+			    cout << "Saisir un entier"<< endl;
+			}else{
+				if(tabr.addToTabr(val)){
+					cout << "Valeur ajoutée avec succés, félicitation."<< endl;
+				}
+			}
+				
 			break;
 		default:
 			// Code
