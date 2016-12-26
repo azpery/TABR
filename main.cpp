@@ -27,6 +27,7 @@ int main(){
 		cout << "4 - Exporter TABR dans un fichier" << endl;
 		cout << "5 - Générer TABR" << endl;
 		cout << "6 - Ajouter une valeur à notre TABR" << endl;
+		cout << "7 - Vérifier si TABR est bien rempli" << endl; 
 		cout << "0 - Quitter" << endl;
 		cin >> choix;
 		switch (choix) {
@@ -83,20 +84,34 @@ int main(){
 			}	
 			break;
 		case 6:
-			
-			cout << "Saisir la valeur à ajouter"<< endl;	 
-			cin >> val; 
-			if (cin.fail()) {
-			    cout << "Saisir un entier"<< endl;
-			}else{
-				if(tabr.addToTabr(val)){
-					cout << "Valeur ajoutée avec succés, félicitation."<< endl;
+			{
+				cout << "Saisir la valeur à ajouter"<< endl;	 
+				cin >> val; 
+				if (cin.fail()) {
+				    cout << "Saisir un entier"<< endl;
+				}else{
+					if(tabr.addToTabr(val)){
+						cout << "Valeur ajoutée avec succés, félicitation."<< endl;
+					}
 				}
+				break;
 			}
-				
-			break;
+		case 7:
+			{
+				bool verif = false;
+				cout << "Vérification "<< endl;	 		
+
+				verif = tabr.tabrBienRempli();
+
+				if(verif){
+					cout << "TABR est conforme" << endl;
+				} else {
+					cout << "Le TABR est mal rempli";
+				}	
+			}
+			break;	
 		default:
-			// Code
+			cout << "Merci de re-saisir choix incorrect" << endl;
 			break;
 		}
 	}

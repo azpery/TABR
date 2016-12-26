@@ -42,8 +42,11 @@ class Tabr{
 
 		vector<Interval> generateInter(int m,int n);
 		int random(int min,int max);
-		vector<int> multiple_random(int min,int max,int nb);
+		Abr multiple_random(int min,int max,int nb);
 
+
+		// Vérification // 
+		bool tabrBienRempli();
 
 
 		// Affichages // 

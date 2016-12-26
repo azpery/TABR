@@ -8,6 +8,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cstddef>
+
 
 
 using namespace std;
@@ -30,6 +32,7 @@ class Abr{
 		void afficher(Noeud* p);
 		bool isRoot(Noeud* c);
 		string to_String(Noeud* c);
+		bool abrBienRempli(Noeud* c,vector<int> values,bool res,int min,int max);
 };
 
 #include "abr.tpp"

@@ -1,3 +1,5 @@
+
+
 #include "tabr.hpp"
 #include <string>
 #include <sstream>
@@ -43,11 +45,8 @@ Tabr::Tabr(int m,int n,int nbNoeud){
 	{
 		vector<int> values;
 		Case c;
-		c.interval = intervalles.at(i);
-		values = multiple_random(c.interval.valmin,c.interval.valmax,nbNoeud);
-		afficher_vector_int(values);
-		Abr abr(values);
-		c.abr = abr;
+		c.interval = intervalles.at(i);	
+		c.abr = multiple_random(c.interval.valmin,c.interval.valmax,nbNoeud);
 		tabr.push_back(c);
 	}
 }
@@ -57,6 +56,53 @@ Tabr::Tabr(int m,int n,int nbNoeud){
 void Tabr::remplirCase(vector<Interval> intervals,vector<int> values){
 
 
+
+
+}
+
+
+bool Tabr::tabrBienRempli(){
+
+	bool res = true; 
+	// vérifications des intervalles // 
+	int nbIntervalles = tabr.size();
+	int i=0;
+/*
+(a) Ilssontbiendéfinis:pourtouti,T[i].debut≤T[i].fin;
+(b) Ils sont tous disjoints : deux intervalles différents n’ont aucun élément en commun ;
+(c) Ils sont ordonnés par ordre croissant : pour tout i (sauf le dernier), T [i].f in < T [i + 1].debut.
+*/
+	while(i<nbIntervalles&&res){
+
+		int valmin = tabr.at(i).interval.valmin;
+		int valmax = tabr.at(i).interval.valmax;
+
+		if(valmin > valmax){
+			res = false; 
+		}
+
+		if(i!=nbIntervalles-1){
+			res = tabr.at(i).interval.valmax <= tabr.at(i+1).interval.valmin;
+			cout << "Problème avec votre : ";
+			afficher_inter(tabr.at(i).interval);
+			cout << "et : ";
+			afficher_inter(tabr.at(i+1).interval);
+
+			cout << "elles se chevauchent ! " << endl;
+			
+		}
+
+		vector<int> values;
+
+		Abr abr = tabr.at(i).abr;
+
+		res = abr.abrBienRempli(abr.racine,values,res,valmin,valmax);
+
+		i++;
+	}
+
+
+	return res; 
 }
 
 
@@ -213,17 +259,17 @@ int Tabr::random(int min,int max){
 	return rand()%(max-min) + min;
 }
 
-vector<int> Tabr::multiple_random(int min,int max,int nb){
+Abr Tabr::multiple_random(int min,int max,int nb){
 
-
-	vector<int> values;
+	Abr abr;
 
 	for(int i=0;i<nb;i++){
 
 		int val = random(min,max);
-		values.push_back(val);
-
+		if(!abr.ajouter(abr.racine,val)){
+			i--;
+		}
 	}
 
-	return values;
+	return abr;
 }

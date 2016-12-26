@@ -69,6 +69,38 @@ bool Abr::isRoot(Noeud* c){
 	return res;
 }
 
+bool Abr::abrBienRempli(Noeud* c,vector<int> values,bool res,int min,int max){
+
+
+	if(res && c!=NULL){
+
+		int val = c->val;
+
+		if(find(values.begin(), values.end(), val) != values.end()){
+			cout << "Element déjà présent dans l'ABR";
+			res = false; 
+		} else {
+
+			if(val>= min && val<= max){
+
+				values.push_back(val);
+
+				return abrBienRempli(c->sad,values,res,min,max);
+				return abrBienRempli(c->sag,values,res,min,max);
+			} else {
+				cout << "Element " << val <<" sort des bornes [" << min <<";"<< max <<"]";
+
+				res =false; 
+			}
+		}
+
+		return res; 
+	} else {
+		return res; 
+	}
+}
+
+
 string Abr::to_String(Noeud* c){
 	string res = "";
     if (c != NULL)
