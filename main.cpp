@@ -27,7 +27,8 @@ int main(){
 		cout << "4 - Exporter TABR dans un fichier" << endl;
 		cout << "5 - Générer TABR" << endl;
 		cout << "6 - Ajouter une valeur à notre TABR" << endl;
-		cout << "7 - Vérifier si TABR est bien rempli" << endl; 
+		cout << "7 - Ajouter une valeur à notre TABR" << endl;
+		cout << "8 - Vérifier si TABR est bien rempli" << endl; 
 		cout << "0 - Quitter" << endl;
 		cin >> choix;
 		switch (choix) {
@@ -97,6 +98,21 @@ int main(){
 				break;
 			}
 		case 7:
+			{
+				cout << "Saisir la valeur à supprimer"<< endl;	 
+				cin >> val; 
+				if (cin.fail()) {
+				    cout << "Saisir un entier"<< endl;
+				}else{
+					if(tabr.delToTabr(val)){
+						cout << "Valeur supprimée avec succés."<< endl;
+					} else {
+						cout << "Valeur non trouvée dans le TABR "<< endl;
+					}
+				}
+				break;
+			}	
+		case 8:
 			{
 				bool verif = false;
 				cout << "Vérification "<< endl;	 		

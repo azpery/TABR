@@ -53,6 +53,44 @@ bool Abr::ajouter(Noeud* &node, int val){
 	return res;
 }
 
+//Permet d'ajouter x dans l'arbre
+bool Abr::supprimer(Noeud* &node,int val){
+	bool res = false;
+
+	if(node!=NULL){
+		//si la valeur à inserer est inférieur à celle du noeud acutel
+		if(val < node->val){
+			res = supprimer(node->sag, val);
+		}
+		else if(val > node->val){
+			res = supprimer(node->sad, val);
+		}else{
+
+			if(node->sag == NULL){
+				node = node->sad;
+			} else if(node->sad == NULL){
+				node = node->sag;
+			} else {
+
+				//échanger x (element à supprimer) avec l'élément y de l'ABR qui lui est directement inférieur (càd le plus grand de son sag)
+				Noeud* &plusgrandsag = node->sag; 
+				while(plusgrandsag->sad!=NULL){
+					plusgrandsag = plusgrandsag->sad;
+				}
+
+				// Suppression X // 
+				 plusgrandsag->sad = node->sad;	
+				 plusgrandsag->sag = node->sag;
+          		 node = node->sag;	
+			res = true;
+			cout << "La valeur : " << val << " a été supprimée" << endl;
+			}
+		}
+	}	
+	return res;
+}
+
+
 void Abr::afficher(Noeud* c)
 {
     if (c != NULL)

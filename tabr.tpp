@@ -83,12 +83,14 @@ bool Tabr::tabrBienRempli(){
 
 		if(i!=nbIntervalles-1){
 			res = tabr.at(i).interval.valmax <= tabr.at(i+1).interval.valmin;
-			cout << "Problème avec votre : ";
-			afficher_inter(tabr.at(i).interval);
-			cout << "et : ";
-			afficher_inter(tabr.at(i+1).interval);
-
-			cout << "elles se chevauchent ! " << endl;
+			
+			if(!res){
+				cout << "Problème avec : ";
+				afficher_inter(tabr.at(i).interval);
+				cout << "et : ";
+				afficher_inter(tabr.at(i+1).interval);
+				cout << "elles se chevauchent ! " << endl;
+			}
 			
 		}
 
@@ -143,6 +145,22 @@ bool Tabr::addToTabr(int my_val){
 	}
 	return res;
 }
+
+
+bool Tabr::delToTabr(int my_val){
+	bool res = false;
+	bool foundInter = false;
+	for (int i=0; i<tabr.size();i++){
+		if(tabr[i].interval.valmin <= my_val &&  my_val <= tabr[i].interval.valmax){
+			foundInter = true;
+			res = tabr[i].abr.supprimer(tabr[i].abr.racine, my_val);
+		}
+	}
+	if(!foundInter){
+		cout << "La valeur" << my_val << " ne correspond à aucun interval" << endl;
+	}
+	return res;
+}	
 
 string Tabr::to_String(){
 	string res = "";

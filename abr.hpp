@@ -29,6 +29,7 @@ class Abr{
 		Noeud* racine; //noeud_arbre vide
 		int nb_noeuds; //nb de noeud dans l'arbre
 		bool ajouter(Noeud*& node, int val);
+		bool supprimer(Noeud*& node, int val);
 		void afficher(Noeud* p);
 		bool isRoot(Noeud* c);
 		string to_String(Noeud* c);
