@@ -23,15 +23,21 @@ struct Noeud{
 class Abr{
 
 	public:
+
+		int nbElements;
 		Abr();
 		Abr(vector<string> values);
 		Abr(vector<int> values);
 		Noeud* racine; //noeud_arbre vide
 		int nb_noeuds; //nb de noeud dans l'arbre
+
+		int profondeur (Noeud* & node);
 		bool ajouter(Noeud*& node, int val);
+		bool ajouterNoeud(Noeud*& node, Noeud*& nodeToAdd);
 		bool supprimer(Noeud*& node, int val);
 		void suppriMax(Noeud* &node,int * y);
 		void afficher(Noeud* p);
+		bool isEquilibre(Noeud* & node);
 		bool isRoot(Noeud* c);
 		string to_String(Noeud* c);
 		bool abrBienRempli(Noeud* c,vector<int> values,bool res,int min,int max);

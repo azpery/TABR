@@ -33,13 +33,10 @@ class Tabr{
 		vector<string> splitVector(const string &s, char delim);
 		void export_tabr(string path);
 
-
 		void remplirCaseString(vector<string> intervals,vector<string> values);
 		void remplirCase(vector<Interval> intervals,vector<int> values);
 
-
 		// Genérations // 
-
 		vector<Interval> generateInter(int m,int n);
 		int random(int min,int max);
 		Abr multiple_random(int min,int max,int nb);
@@ -50,10 +47,10 @@ class Tabr{
 
 
 		// Insertions / Suppresions // 
-
 		bool addToTabr(int my_val);
 		bool delToTabr(int my_val);
-
+		void fusion(int indice);
+		bool isEquilibreAbr(int indice);
 
 
 

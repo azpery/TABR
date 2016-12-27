@@ -20,16 +20,24 @@ int main(){
 	int max,nbInter,nbNoeud;
 
 	while (choix != 0){
-		cout << endl << "Que souhaitez vous faire ?" << endl;
-		cout << "1 - Afficher TABR en mode simple (parcours suffixe)" << endl;
-		cout << "2 - Charger un TABR depuis un fichier" << endl;
-		cout << "3 - Afficher TABR en mode graphique (parcours suffixe)" << endl;
-		cout << "4 - Exporter TABR dans un fichier" << endl;
-		cout << "5 - Générer TABR" << endl;
-		cout << "6 - Ajouter une valeur à notre TABR" << endl;
-		cout << "7 - Ajouter une valeur à notre TABR" << endl;
-		cout << "8 - Vérifier si TABR est bien rempli" << endl; 
-		cout << "0 - Quitter" << endl;
+		cout << " ----------------------- MENU --------------------------"  << endl;
+		cout << "|1  - Afficher TABR en mode simple (parcours suffixe)   |" << endl;
+		cout << "|2  - Charger un TABR depuis un fichier                 |" << endl;
+		cout << "|3  - Afficher TABR en mode graphique (parcours suffixe)|" << endl;
+		cout << "|4  - Exporter TABR dans un fichier                     |" << endl;
+		cout << "|5  - Générer TABR                                      |" << endl;
+		cout << "|6  - Ajouter une valeur au TABR                        |" << endl;
+		cout << "|7  - Supprimer une valeur au TABR                      |" << endl;
+		cout << "|8  - Vérifier si TABR est bien rempli                  |" << endl; 
+		cout << "|9  - Fusion de deux cases du TABR                      |" << endl;
+		cout << "|10 - Equilibre en profondeur d'un ABR                  |" << endl; 
+		cout << "|11 - ABR vers TABR                                     |" << endl;
+		cout << "|12 - TABR vers ABR                                     |" << endl;
+		cout << "|  -----------                                          |" << endl;
+		cout << "|0  - Quitter                                           |" << endl;
+		cout << " -------------------------------------------------------"  << endl;
+
+
 		cin >> choix;
 		switch (choix) {
 		case 1:
@@ -128,10 +136,7 @@ int main(){
 			break;	
 		case 9:	
 			{
-
 				int indice1; 
-				int indice2;
-
 				bool verif = false;
 				cout << "Fusion cases TABR "<< endl;	 		
 
@@ -140,37 +145,37 @@ int main(){
 				cin >> indice1; 
 				if (cin.fail()) {
 				    cout << "Saisir un entier"<< endl;
-				}else{ 
-					cout << "Saisir le numero de la seconde case du TABR à fusioner "<< endl;	
-					cin >> indice2;  		
-					if(cin.fail()){
-						cout << "Saisir un entier" << endl;
-					} else {
-
-						if(indice1 < 1 || indice2 > tabr.tabr.size()){
-						 	cout << "Le numero de la première case doit être supérieur à 0, celui de la seconde doit être inférieur ou égal à la taille du TABR" << endl;
-						} else if(indice1 > indice2){
-							cout << "Le numero de la première case doit être inférieur à celui de la seconde" << endl;
-						} else if(indice1 == indice2){
-							cout << "Les indices doivent être différents" << endl;
-						} else {
-
-							// Pas de soucis de saisie on appelle la fonction //
-
-
-						}
-
-					}
-				
-
+				}else if(indice1 < 1 || (indice1+1) > tabr.tabr.size()){
+					cout << "Le numero de la case doit être supérieur à 0 et strictement inférieur au nombre de case du TABR" << endl;
+				} else {
+					tabr.fusion(indice1-1);
 				}
-
-		
-
-
-
+					
+				
 			}
-			break;		
+			break;
+		case 10:	
+			{
+				int indice;
+				tabr.afficher_tabr();
+				cout << "Saisir le numero de la case du TABR correspondant à l'ABR à tester"<< endl;	
+					cin >> indice;  	
+				if (cin.fail()) {
+				    cout << "Saisir un entier"<< endl;
+				}else{ 
+					if(indice < 1 || indice > tabr.tabr.size()){
+						cout << "Merci de saisir un entier entre 1 et "<< tabr.tabr.size() << endl;
+					} else {
+						indice--;
+						if(tabr.isEquilibreAbr(indice)){
+							cout << "Abr à la case :"<< indice+1 <<" est équilibré" << endl;
+						} else {
+							cout << "Abr à la case :"<< indice+1 <<"n'est pas équilibré" << endl;
+						}
+					}
+				}
+			}
+			break;					
 
 		default:
 			cout << "Merci de re-saisir choix incorrect" << endl;

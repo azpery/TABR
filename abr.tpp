@@ -6,16 +6,18 @@
 #include <fstream>
 #include <deque>
 #include <iomanip>
+#include <algorithm>
 
 using namespace std;
 //créer un abr vide
 Abr::Abr(){
 	racine = NULL;
+	nbElements = 0;
 }
 
 Abr::Abr(vector<string> v){
 	racine = NULL;
-
+	nbElements = 0;
   	for (int i = v.size() - 1; i >= 0 ;i--){
     	ajouter(racine, stoi(v[i]));
   	}
@@ -33,6 +35,7 @@ Abr::Abr(vector<int> v){
 bool Abr::ajouter(Noeud* &node, int val){
 	bool res = true;
 	if(node == NULL){
+		nbElements ++;
 		node = new Noeud;
 		node->val = val;
 		node->sad = NULL;
@@ -53,6 +56,72 @@ bool Abr::ajouter(Noeud* &node, int val){
 	return res;
 }
 
+
+bool Abr::ajouterNoeud(Noeud*& node, Noeud*& nodeToAdd){
+		bool res = true;
+		int val = nodeToAdd->val;
+
+	if(node == NULL){
+		nbElements ++;
+		node = nodeToAdd;
+	}
+	else{
+		//si la valeur à inserer est inférieur à celle du noeud acutel
+		if(val < node->val){
+			res = ajouterNoeud(node->sag, nodeToAdd);
+		}
+		else if(val > node->val){
+			res = ajouterNoeud(node->sad, nodeToAdd);
+		}else{
+			res = false;
+			cout << "La valeur : " << val << " existe déjà, skipping.." << endl;
+		}
+	}
+	return res;
+
+
+
+
+}
+
+
+bool Abr::isEquilibre(Noeud* & node){
+
+	// On va calculer pour chaque noeud son équilibre soit la différence de profondeur de son fils droit //
+	// et de son fils gauche // 
+	bool res = true;
+
+	if(node !=NULL){
+
+		int profondeurgauche = profondeur(node->sag); 
+		int profondeurdroite = profondeur(node->sad);
+		int deseq = profondeurgauche - profondeurdroite;
+		if(deseq< -1 || deseq > 1){
+			res = false; 
+			cout << "Abr non équilibré pour le noeud ayant comme valeur :" << node->val << endl;
+			cout << "profondeur fils de droite = " << profondeurdroite << endl;
+			cout << "profondeur fils de gauche = " << profondeurgauche << endl;
+			cout << "Déséquilibre = " << deseq << endl; 
+
+		} else {
+			res = isEquilibre(node->sad); 
+			res = isEquilibre(node->sag);
+		}
+	}
+	return res;
+}
+
+int Abr::profondeur (Noeud* & node){
+
+
+	if (node != NULL){
+		return 1 + max( profondeur(node->sag), profondeur(node->sad));
+	}
+	else {
+		return 0;
+	}
+		
+}
 
 void Abr::suppriMax(Noeud* &	node,int * y){
 
@@ -80,18 +149,21 @@ bool Abr::supprimer(Noeud* &node,int val){
 			if(node->sag == NULL){
 				node = node->sad;
 				res = true;
-				cout << "La valeur : " << val << " a été supprimée" << endl;				
+				cout << "La valeur : " << val << " a été supprimée" << endl;	
+				nbElements --;			
 			} else if(node->sad == NULL){
 				node = node->sag;
 				res = true;
 				cout << "La valeur : " << val << " a été supprimée" << endl;
+				nbElements --;
 			} else {
 				int y;
 				suppriMax(node->sag,&y);
 				cout << "Fin suppriMax" << endl;
-
 				node->val = y;
 				cout << "La valeur : " << val << " a été supprimée" << endl;
+				res = true;
+				nbElements --;
 			}
 		}
 	}	

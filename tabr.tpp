@@ -53,6 +53,46 @@ Tabr::Tabr(int m,int n,int nbNoeud){
 
 
 
+bool Tabr::isEquilibreAbr(int indice){
+
+	Abr abrAtester = tabr.at(indice).abr;
+	
+	return(abrAtester.isEquilibre(abrAtester.racine));
+
+}
+
+
+void Tabr::fusion(int indice){
+
+	Case cMin = tabr.at(indice); 
+	Case cMax = tabr.at(indice+1); 
+
+	if(cMin.abr.nbElements>cMax.abr.nbElements){
+		// On ajoute l'arbre min dans l'arbre max //
+		cMax.abr.ajouterNoeud(cMax.abr.racine,cMin.abr.racine);
+		tabr.at(indice+1).interval.valmax = cMax.interval.valmax;
+
+		// Arbres fusionnés il ne reste plus qu'a décaler //
+		for(int i=indice+1;i<tabr.size();i++){
+			tabr.at(i-1) = tabr.at(i);
+		}
+	} else {
+		// On ajoute l'arbre max dans l'arbre min //
+		cMin.abr.ajouterNoeud(cMin.abr.racine,cMax.abr.racine);
+		tabr.at(indice).interval.valmax = cMax.interval.valmax;
+
+		// Arbres fusionnés il ne reste plus qu'a décaler //
+		for(int i=indice+1;i<tabr.size()-1;i++){
+			tabr.at(i) = tabr.at(i+1);
+		}
+	}
+
+	// On supprime le dernier élément //
+	tabr.pop_back();
+
+}
+
+
 void Tabr::remplirCase(vector<Interval> intervals,vector<int> values){
 
 
