@@ -53,6 +53,17 @@ bool Abr::ajouter(Noeud* &node, int val){
 	return res;
 }
 
+
+void Abr::suppriMax(Noeud* &	node,int * y){
+
+	if(node->sad==NULL){
+		 *y = node->val;
+		 node = node->sag;
+	} else {
+		suppriMax(node->sad,y); 
+	}
+}
+
 //Permet d'ajouter x dans l'arbre
 bool Abr::supprimer(Noeud* &node,int val){
 	bool res = false;
@@ -68,22 +79,19 @@ bool Abr::supprimer(Noeud* &node,int val){
 
 			if(node->sag == NULL){
 				node = node->sad;
+				res = true;
+				cout << "La valeur : " << val << " a été supprimée" << endl;				
 			} else if(node->sad == NULL){
 				node = node->sag;
+				res = true;
+				cout << "La valeur : " << val << " a été supprimée" << endl;
 			} else {
+				int y;
+				suppriMax(node->sag,&y);
+				cout << "Fin suppriMax" << endl;
 
-				//échanger x (element à supprimer) avec l'élément y de l'ABR qui lui est directement inférieur (càd le plus grand de son sag)
-				Noeud* &plusgrandsag = node->sag; 
-				while(plusgrandsag->sad!=NULL){
-					plusgrandsag = plusgrandsag->sad;
-				}
-
-				// Suppression X // 
-				 plusgrandsag->sad = node->sad;	
-				 plusgrandsag->sag = node->sag;
-          		 node = node->sag;	
-			res = true;
-			cout << "La valeur : " << val << " a été supprimée" << endl;
+				node->val = y;
+				cout << "La valeur : " << val << " a été supprimée" << endl;
 			}
 		}
 	}	

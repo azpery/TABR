@@ -112,7 +112,7 @@ int main(){
 				}
 				break;
 			}	
-		case 8:
+		case 8:	
 			{
 				bool verif = false;
 				cout << "Vérification "<< endl;	 		
@@ -126,6 +126,52 @@ int main(){
 				}	
 			}
 			break;	
+		case 9:	
+			{
+
+				int indice1; 
+				int indice2;
+
+				bool verif = false;
+				cout << "Fusion cases TABR "<< endl;	 		
+
+				tabr.afficher_tabr();
+				cout << "Saisir le numero de la première case du TABR à fusioner "<< endl;	 		
+				cin >> indice1; 
+				if (cin.fail()) {
+				    cout << "Saisir un entier"<< endl;
+				}else{ 
+					cout << "Saisir le numero de la seconde case du TABR à fusioner "<< endl;	
+					cin >> indice2;  		
+					if(cin.fail()){
+						cout << "Saisir un entier" << endl;
+					} else {
+
+						if(indice1 < 1 || indice2 > tabr.tabr.size()){
+						 	cout << "Le numero de la première case doit être supérieur à 0, celui de la seconde doit être inférieur ou égal à la taille du TABR" << endl;
+						} else if(indice1 > indice2){
+							cout << "Le numero de la première case doit être inférieur à celui de la seconde" << endl;
+						} else if(indice1 == indice2){
+							cout << "Les indices doivent être différents" << endl;
+						} else {
+
+							// Pas de soucis de saisie on appelle la fonction //
+
+
+						}
+
+					}
+				
+
+				}
+
+		
+
+
+
+			}
+			break;		
+
 		default:
 			cout << "Merci de re-saisir choix incorrect" << endl;
 			break;
