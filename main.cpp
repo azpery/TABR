@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits>
 #include "tabr.hpp"
 
 using namespace std;
@@ -175,7 +176,72 @@ int main(){
 					}
 				}
 			}
+			break;
+		case 11:	
+			{
+				int saisie = 1; 
+				
+				cout << "Transformation d'un Abr en TABR" << endl;
+				cout << "Merci de saisir votre Abr valeur par valeur en respectant son parcours suffixe entrer 0 quand vous aurez terminé " << endl;
+
+				vector<int> values;
+
+				int max = numeric_limits<int>::min(); // minimum value
+				int min = numeric_limits<int>::max();
+
+				while (saisie !=0){
+					cout << "Merci de saisir une valeur strictement positive ou bien entrer 0 si vous avez terminé" << endl;
+					cin >> saisie; 
+
+					if (cin.fail()||saisie < 0) {
+				    	cout << "merci de saisir un entier strictement supérieur à 0"<< endl;
+						saisie = -1;
+					}
+
+					if(saisie > 0){
+						// mise à jour de la valeur minimale //
+						if(saisie > max){
+							max = saisie;
+						} else if (saisie < min){
+							min = saisie;
+						}
+						values.push_back(saisie);
+					}
+				}
+				// on construit l'ABR // 
+				Abr abr(values); 
+				cout << "Voici l'ABR que vous avez saisi (parcours suffixe) : ";
+				abr.afficher(abr.racine); 
+				cout << "" << endl;
+				cout << "Contenant "<< abr.nbElements <<" élément(s) distinct(s)" << endl;
+
+				// On le convertit en TABR 
+				Tabr convert(Tabr(values, min, max));
+
+				cout << "Afficher graphiquement"<< endl;
+				convert.afficher_tabr_graphique();
+
+			}
 			break;					
+		case 12:	
+			{
+				cout << "transformation du TABR actuel en Abr" << endl;
+				
+				Tabr copy = tabr;
+
+				copy.afficher_tabr();
+
+				Abr abr = copy.tabrToAbr();
+
+				abr.afficher(abr.racine);
+
+
+
+
+
+			}
+			break;					
+
 
 		default:
 			cout << "Merci de re-saisir choix incorrect" << endl;

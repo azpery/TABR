@@ -29,6 +29,9 @@ class Tabr{
 		Tabr();
 		Tabr(string file);
 		Tabr(int m,int n,int nbNoeud);
+		Tabr(vector<int> values, int min, int max);
+
+
 		void split(const string &s, char delim, vector<string> &elems);
 		vector<string> splitVector(const string &s, char delim);
 		void export_tabr(string path);
@@ -37,7 +40,7 @@ class Tabr{
 		void remplirCase(vector<Interval> intervals,vector<int> values);
 
 		// Genérations // 
-		vector<Interval> generateInter(int m,int n);
+		vector<Interval> generateInter(int min,int max,int n);
 		int random(int min,int max);
 		Abr multiple_random(int min,int max,int nb);
 
@@ -53,6 +56,11 @@ class Tabr{
 		bool isEquilibreAbr(int indice);
 
 
+
+		// convertion //
+		Abr tabrToAbr();
+
+		bool appartientInterval(Interval inter, int val);
 
 		// Affichages // 
 		void afficher_vector_string (const vector<string>& v);

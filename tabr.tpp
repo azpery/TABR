@@ -39,7 +39,7 @@ Tabr::Tabr(string file){
 
 
 Tabr::Tabr(int m,int n,int nbNoeud){
-	vector<Interval> intervalles = generateInter(m,n);
+	vector<Interval> intervalles = generateInter(1,m,n);
 	afficher_vector_intervalles(intervalles);
 	for(int i=0;i<intervalles.size();i++)
 	{
@@ -52,13 +52,83 @@ Tabr::Tabr(int m,int n,int nbNoeud){
 }
 
 
+Tabr::Tabr(vector<int> values, int min, int max){
+
+	// Déterminer k, le nombre d'intervales // 
+
+	int taille = max - min;
+	int k = 0;
+
+	if (taille <= 10){
+		k = 2; 
+	} else if (taille > 10 && taille < 50 ){
+		k = 3;
+	} else if (taille >=50 && taille < 100){
+		k = 4; 
+	} else {
+		k = 6;
+	}
+
+
+	vector<Interval> intervalles = generateInter(min,max,k);
+	afficher_vector_intervalles(intervalles);
+
+	for(int i=0;i<intervalles.size();i++)
+	{
+		Case c;
+		c.interval = intervalles.at(i);	
+		Abr abr;
+		c.abr = abr;
+	}
+
+
+	for(int i=0;i<values.size();i++){
+		bool trouve = false;
+		int val = values.at(i);
+
+		k = 0;
+		while(!trouve&&k<tabr.size()){
+
+			Case current = tabr.at(k);
+			if(appartientInterval(current.interval,val)){
+				trouve = true; 
+				current.abr.ajouter(current.abr.racine,val);
+			}
+
+			tabr.at(k) = current;
+		k++;}
+	}
+
+
+
+}
+
+
+bool Tabr::appartientInterval(Interval inter, int val){
+
+	return (val>=inter.valmin && inter.valmax >= val);
+
+}
+
 
 bool Tabr::isEquilibreAbr(int indice){
 
 	Abr abrAtester = tabr.at(indice).abr;
-	
+
 	return(abrAtester.isEquilibre(abrAtester.racine));
 
+}
+
+
+Abr Tabr::tabrToAbr(){
+
+	while(tabr.size()>1){
+		fusion(0);
+	}
+
+	Abr abr = tabr.at(0).abr; 
+
+	return abr;
 }
 
 
@@ -135,11 +205,8 @@ bool Tabr::tabrBienRempli(){
 		}
 
 		vector<int> values;
-
 		Abr abr = tabr.at(i).abr;
-
 		res = abr.abrBienRempli(abr.racine,values,res,valmin,valmax);
-
 		i++;
 	}
 
@@ -241,14 +308,14 @@ vector<string> Tabr::splitVector(const string &s, char delim) {
     return elems;
 
 }
-
-vector<Interval> Tabr::generateInter(int m,int n){
+// m valeur interval max 
+vector<Interval> Tabr::generateInter(int min,int max,int n){
 
 	vector<Interval> intervalles; 
 
 	Interval inter; 
-	int borne_min=1;
-	int borne_max=m;
+	int borne_min=min;
+	int borne_max=max;
 	int i = 0;
 
 	srand(time(NULL)); // initialisation de rand
@@ -260,13 +327,13 @@ vector<Interval> Tabr::generateInter(int m,int n){
 	inter.valmin = borne_min; 
 	inter.valmax = borne_max;
 
-	if(borne_max < m-5){
+	if(borne_max < max-5){
 		int a = borne_max + random(0,5);
 		borne_max = a;
 	}
 
 	borne_min = borne_max;
-	borne_max = m;
+	borne_max = max;
 	
 	intervalles.push_back(inter);// ajout intervalle dans le vector //
 
@@ -276,7 +343,7 @@ vector<Interval> Tabr::generateInter(int m,int n){
 
 	inter.valmin = inter.valmax; 
 
-	inter.valmax = m;
+	inter.valmax = max;
 
 	intervalles.push_back(inter);
 
