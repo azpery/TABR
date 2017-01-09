@@ -56,19 +56,10 @@ Tabr::Tabr(vector<int> values, int min, int max){
 
 	// Déterminer k, le nombre d'intervales // 
 
-	int taille = max - min;
+	int nbElements = values.size();
 	int k = 0;
 
-	if (taille <= 10){
-		k = 2; 
-	} else if (taille > 10 && taille < 50 ){
-		k = 3;
-	} else if (taille >=50 && taille < 100){
-		k = 4; 
-	} else {
-		k = 6;
-	}
-
+	k = nbElements / 10 + 1;
 
 	vector<Interval> intervalles = generateInter(min,max,k);
 	afficher_vector_intervalles(intervalles);
@@ -79,24 +70,17 @@ Tabr::Tabr(vector<int> values, int min, int max){
 		c.interval = intervalles.at(i);	
 		Abr abr;
 		c.abr = abr;
+		tabr.push_back(c);
 	}
+
+
 
 
 	for(int i=0;i<values.size();i++){
 		bool trouve = false;
 		int val = values.at(i);
 
-		k = 0;
-		while(!trouve&&k<tabr.size()){
-
-			Case current = tabr.at(k);
-			if(appartientInterval(current.interval,val)){
-				trouve = true; 
-				current.abr.ajouter(current.abr.racine,val);
-			}
-
-			tabr.at(k) = current;
-		k++;}
+		addToTabr(val);
 	}
 
 
@@ -242,9 +226,11 @@ bool Tabr::addToTabr(int my_val){
 	bool res = false;
 	bool foundInter = false;
 	for (int i=0; i<tabr.size();i++){
+		
 		if(tabr[i].interval.valmin <= my_val &&  my_val <= tabr[i].interval.valmax){
 			foundInter = true;
 			res = tabr[i].abr.ajouter(tabr[i].abr.racine, my_val);
+			cout << "La valeur " << my_val << " a bien été ajouté dans le TABR" << endl;
 		}
 	}
 	if(!foundInter){
@@ -322,17 +308,18 @@ vector<Interval> Tabr::generateInter(int min,int max,int n){
 
 	for(int i=0;i<n-1;i++){
 
-	borne_max = random(borne_min,(borne_max/n)*(1+i));
+	borne_max = random(borne_min,(borne_max/n)*(1+i) + n);
 
 	inter.valmin = borne_min; 
 	inter.valmax = borne_max;
 
-	if(borne_max < max-5){
-		int a = borne_max + random(0,5);
+	if(borne_max < max-6){
+		int a = borne_max + random(1,5);
+		cout << "Sorti Random" << endl;
 		borne_max = a;
 	}
 
-	borne_min = borne_max;
+	borne_min = borne_max + 1;
 	borne_max = max;
 	
 	intervalles.push_back(inter);// ajout intervalle dans le vector //
@@ -341,7 +328,7 @@ vector<Interval> Tabr::generateInter(int min,int max,int n){
 
 	// POur le dernier intervalle // 
 
-	inter.valmin = inter.valmax; 
+	inter.valmin = inter.valmax + 1; 
 
 	inter.valmax = max;
 
@@ -380,17 +367,26 @@ void Tabr::afficher_inter(Interval inter){
 
 
 int Tabr::random(int min,int max){
+	cout << "Dans Random" << endl;
+	cout << "Max random :" << max << endl;
+	cout << "Min random :" << min << endl;
 
-	return rand()%(max-min) + min;
+	int random_variable = rand();
+	return random_variable %(max-min) + min;
 }
 
 Abr Tabr::multiple_random(int min,int max,int nb){
 
 	Abr abr;
 
+	int diff = max - min;
+	if(nb > diff){
+		nb = diff;
+	}
+
 	for(int i=0;i<nb;i++){
 
-		int val = random(min,max);
+		int val = random(min,max+1);
 		if(!abr.ajouter(abr.racine,val)){
 			i--;
 		}

@@ -176,7 +176,7 @@ void Abr::afficher(Noeud* c)
     if (c != NULL)
     {
         cout << to_String(c);
-    }
+    } 
 }
 
 bool Abr::isRoot(Noeud* c){

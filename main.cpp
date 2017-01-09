@@ -15,6 +15,7 @@ bool is_file_exist(string file){
 int main(){
 	Tabr tabr("anticonstitutionnellement_pas.txt");
 	string nom, c, v;
+	string folderName;
 	int val,p,q;
 	int choix=1;
 	// Pour générer un arbre // 
@@ -34,13 +35,17 @@ int main(){
 		cout << "|10 - Equilibre en profondeur d'un ABR                  |" << endl; 
 		cout << "|11 - ABR vers TABR                                     |" << endl;
 		cout << "|12 - TABR vers ABR                                     |" << endl;
-		cout << "|  -----------                                          |" << endl;
+		cout << "|  ---------------------                                |" << endl;
 		cout << "|0  - Quitter                                           |" << endl;
 		cout << " -------------------------------------------------------"  << endl;
 
 
 		cin >> choix;
 		switch (choix) {
+		case 0: 
+			cout << "Merci et à bientôt !" << endl;
+			break; 
+
 		case 1:
 			tabr.afficher_tabr();
 			break;
@@ -186,27 +191,31 @@ int main(){
 
 				vector<int> values;
 
-				int max = numeric_limits<int>::min(); // minimum value
-				int min = numeric_limits<int>::max();
+				int max = numeric_limits<int>::min(); // min val
+				int min = numeric_limits<int>::max(); // max val 
 
 				while (saisie !=0){
 					cout << "Merci de saisir une valeur strictement positive ou bien entrer 0 si vous avez terminé" << endl;
 					cin >> saisie; 
 
 					if (cin.fail()||saisie < 0) {
-				    	cout << "merci de saisir un entier strictement supérieur à 0"<< endl;
-						saisie = -1;
-					}
-
+				    	cout << "Erreur "<< endl;
+				    	saisie = -1;
+				    	cin.clear();
+				    	cin.ignore(10000,'\n');
+					} 
+					
 					if(saisie > 0){
 						// mise à jour de la valeur minimale //
 						if(saisie > max){
 							max = saisie;
-						} else if (saisie < min){
+						}  
+						if (saisie < min){
 							min = saisie;
 						}
 						values.push_back(saisie);
 					}
+					
 				}
 				// on construit l'ABR // 
 				Abr abr(values); 
@@ -214,12 +223,16 @@ int main(){
 				abr.afficher(abr.racine); 
 				cout << "" << endl;
 				cout << "Contenant "<< abr.nbElements <<" élément(s) distinct(s)" << endl;
+				cout << "valeur min" << min << endl; 
+				cout << "valeur max" << max << endl;
 
 				// On le convertit en TABR 
 				Tabr convert(Tabr(values, min, max));
 
+				tabr = convert;
+
 				cout << "Afficher graphiquement"<< endl;
-				convert.afficher_tabr_graphique();
+				tabr.afficher_tabr();
 
 			}
 			break;					
@@ -234,11 +247,6 @@ int main(){
 				Abr abr = copy.tabrToAbr();
 
 				abr.afficher(abr.racine);
-
-
-
-
-
 			}
 			break;					
 
