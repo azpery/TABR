@@ -392,5 +392,10 @@ Abr Tabr::multiple_random(int min,int max,int nb){
 		}
 	}
 
+	// Dans le cas ou on l'on a un max = min //
+	if(nb == 0){
+		abr.ajouter(abr.racine,min);
+	}
+
 	return abr;
 }
